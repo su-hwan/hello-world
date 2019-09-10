@@ -79,7 +79,7 @@
   </template>
   <script type="text/javascript">
     Vue.component("search-contact-component",{
-      template : "#searchcontacTemplate",
+      template : "#searchcontactTemplate",
       data : function() {
         return {contactlist:[], isProcessing:false};
       },
@@ -87,31 +87,30 @@
         searchEvent : function(name) {
           if (name == '') this.contaclist=[];
           else this.fetchContacts(name);
-        }
-      },
-      fetchContacts : _.debounce(function(name) {
-        this.contactlist = [];
-        this.isProcessing = true;
-        var url = "http://sample.bmaster.kro.kr/contacts_long/search/" + name;
-        var vm = this;
-        fetch(url).then(function(response) {
-          return response.json();
-        }).then(function(json) {
-          vm.contactlist = json;
-          vm.isProcessing = false;
-        }).catch(function(ex) {
-          console.log('parsing failed', ex);
-          vm.contactlist = [];
-          vm.isProcessing = false;
-        })
-      }, 300)
+        },
+        fetchContacts : _.debounce(function(name) {
+          this.contactlist = [];
+          this.isProcessing = true;
+          var url = "http://sample.bmaster.kro.kr/contacts_long/search/" + name;
+          var vm = this;
+          fetch(url).then(function(response) {
+            return response.json();
+          }).then(function(json) {
+            vm.contactlist = json;
+            vm.isProcessing = false;
+          }).catch(function(ex) {
+            console.log('parsing failed', ex);
+            vm.contactlist = [];
+            vm.isProcessing = false;
+          })
+        }, 300)
       }
     })
   </script>
   <!-- End search-contact-component -->
   <body>
     <div id="app" v-cloak>
-      <search-contact-compoent></search-contact-compoent>
+      <search-contact-component></search-contact-component>
     </div>
   </body>
   <script type="text/javascript">
